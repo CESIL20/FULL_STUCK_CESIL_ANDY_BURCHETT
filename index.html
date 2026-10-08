@@ -1,797 +1,250 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CESIL ANDY BURCHETT | Full-Stack & Mobile Dev</title>
-    <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">
-    <!-- Google Fonts para una tipografía moderna -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- ======================================= -->
-    <!-- =            ESTILOS CSS             = -->
-    <!-- ======================================= -->
-    <style>
-        /* --- Variables y Estilos Globales --- */
-        :root {
-            --bg-color: #0d0d0d;
-            --card-bg: #191919;
-            --text-color: #f4f4f4;
-            --secondary-text-color: #a0a0a0;
-            --accent-primary: #00ff88; /* Verde Eléctrico */
-            --accent-secondary: #ff006e; /* Magenta */
-            --accent-mobile: #3498db; /* Azul para Flutter */
-            --font-family: 'Poppins', sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-family);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
-            overflow-x: hidden;
-        }
-
-        /* --- Iconos Flotantes --- */
-        .floating-icons {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* No interferen con clicks */
-            z-index: -1; /* Se quedan detrás del contenido */
-            overflow: hidden;
-        }
-
-        .floating-icons i {
-            position: absolute;
-            font-size: 3.5rem; /* Tamaño de los iconos */
-            color: rgba(25, 25, 25, 0.2); /* Color sutil y transparente */
-            opacity: 0.4;
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
-            animation-direction: alternate;
-        }
-
-        /* Animaciones de flotación variadas */
-        @keyframes float1 {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-25px) rotate(5deg); }
-        }
-
-        @keyframes float2 {
-            0% { transform: translateX(0px) rotate(0deg); }
-            100% { transform: translateX(-20px) rotate(-5deg); }
-        }
-
-        @keyframes float3 {
-            0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-            100% { transform: translateY(20px) translateX(15px) rotate(3deg); }
-        }
-        
-        @keyframes float4 {
-            0% { transform: scale(1) rotate(0deg); }
-            100% { transform: scale(1.1) rotate(8deg); }
-        }
-
-        /* --- Header y Navegación --- */
-        #header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: rgba(13, 13, 13, 0.8);
-            backdrop-filter: blur(15px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--card-bg);
-            transition: all 0.3s ease;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-        }
-
-        .nav-logo {
-            color: var(--accent-primary);
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            padding: 0;
-            margin: 0;
-        }
-
-        .nav-link {
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 50%;
-            background-color: var(--accent-primary);
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-            left: 0;
-        }
-
-        .nav-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .bar {
-            width: 25px;
-            height: 3px;
-            background-color: var(--text-color);
-            margin: 3px 0;
-            transition: 0.3s;
-        }
-
-        /* --- Hero Section con Gradiente Animado --- */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, var(--accent-secondary), var(--accent-primary), var(--accent-mobile), var(--bg-color));
-            background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
-            opacity: 0.15;
-            z-index: -2; /* Detrás de los iconos flotantes */
-            transform: rotate(45deg);
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .hero-content {
-            max-width: 800px;
-            padding: 0 2rem;
-            z-index: 1;
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            line-height: 1.1;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
-            color: var(--accent-primary);
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            color: var(--secondary-text-color);
-            margin-bottom: 2.5rem;
-        }
-
-        /* --- Botones --- */
-        .btn-primary {
-            display: inline-block;
-            background-color: var(--accent-primary);
-            color: var(--bg-color);
-            padding: 1rem 2.5rem;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5);
-        }
-        
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--accent-primary);
-            border: 2px solid var(--accent-primary);
-        }
-        .btn-secondary:hover {
-            background-color: var(--accent-primary);
-            color: var(--bg-color);
-        }
-
-        /* --- Bento Grid Section --- */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            grid-auto-rows: minmax(200px, auto);
-            gap: 1.5rem;
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .grid-item {
-            background-color: var(--card-bg);
-            border: 1px solid #333;
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .grid-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: left 0.5s;
-        }
-
-        .grid-item:hover::before {
-            left: 100%;
-        }
-
-        .grid-item:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
-            border-color: var(--accent-primary);
-        }
-
-        /* Tamaños específicos para la cuadrícula */
-        .about-item { grid-column: span 2; }
-        .services-item { grid-row: span 2; }
-        .skill-main-item { background-color: var(--accent-primary); color: var(--bg-color); }
-        .skill-main-item h3, .skill-main-item p { color: var(--bg-color); }
-        .skills-list-item { grid-column: span 2; }
-        .specialty-item { background: linear-gradient(135deg, var(--accent-secondary), var(--card-bg)); }
-        .mobile-item { background-color: var(--accent-mobile); color: var(--text-color); border-color: var(--accent-mobile);}
-        .mobile-item h3, .mobile-item p { color: var(--text-color); }
-
-
-        .grid-item h2, .grid-item h3 {
-            margin-top: 0;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent-primary);
-        }
-
-        .skill-main-item h3 { color: var(--bg-color); }
-        .specialty-item h3 { color: var(--text-color); }
-        .mobile-item h3 { color: var(--text-color); }
-
-        .grid-item p {
-            color: var(--secondary-text-color);
-            font-size: 1rem;
-        }
-
-        .grid-item ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .grid-item ul li {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-        
-        .grid-item i {
-            margin-right: 0.5rem;
-            color: var(--accent-primary);
-        }
-        .mobile-item i { color: var(--text-color); }
-
-        .about-stats {
-            margin-top: 1.5rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .about-stats span {
-            background-color: var(--bg-color);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: var(--accent-primary);
-        }
-
-        .skills-cloud {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-top: 1rem;
-        }
-
-        .skill-tag {
-            background-color: rgba(0, 255, 136, 0.1);
-            color: var(--accent-primary);
-            padding: 0.5rem 1rem;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border: 1px solid var(--accent-primary);
-            transition: all 0.3s ease;
-        }
-        
-        .skill-tag:hover {
-            transform: scale(1.1);
-            background-color: var(--accent-primary);
-            color: var(--bg-color);
-        }
-        
-        /* --- Sección de Proyectos --- */
-        .projects {
-            padding: 5rem 2rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-        .projects h2 {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-        }
-        .projects-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .project-card {
-            background-color: var(--card-bg);
-            border: 1px solid #333;
-            border-radius: 15px;
-            overflow: hidden;
-            width: 350px;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            border-color: var(--accent-primary);
-        }
-        .project-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .project-content {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .project-content h3 {
-            margin-top: 0;
-            color: var(--accent-primary);
-        }
-        .project-content p {
-            color: var(--secondary-text-color);
-            flex-grow: 1;
-        }
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        .project-tech span {
-            font-size: 0.8rem;
-            background-color: #333;
-            padding: 0.3rem 0.8rem;
-            border-radius: 10px;
-        }
-        .project-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: var(--accent-primary);
-            font-weight: 600;
-            text-decoration: none;
-        }
-        .project-link:hover {
-            text-decoration: underline;
-        }
-
-        /* --- Contacto --- */
-        .contact {
-            text-align: center;
-            padding: 5rem 2rem;
-            border-top: 1px solid var(--card-bg);
-            position: relative;
-            z-index: 1;
-        }
-
-        .contact h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .contact p {
-            color: var(--secondary-text-color);
-            max-width: 500px;
-            margin: 0 auto 2.5rem auto;
-        }
-
-        .social-links {
-            margin-top: 2rem;
-        }
-
-        .social-links a {
-            color: var(--secondary-text-color);
-            text-decoration: none;
-            margin: 0 1rem;
-            font-size: 1.5rem; /* Iconos más grandes */
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--accent-primary);
-            transform: translateY(-3px);
-        }
-
-        /* --- Footer --- */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid var(--card-bg);
-            color: var(--secondary-text-color);
-            font-size: 0.9rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* --- Animaciones al hacer Scroll (Fade In) --- */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .fade-in.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            .nav-menu {
-                position: fixed;
-                left: -100%;
-                top: 70px;
-                flex-direction: column;
-                background-color: rgba(13, 13, 13, 0.98);
-                width: 100%;
-                text-align: center;
-                transition: 0.3s;
-                padding: 2rem 0;
-                border-bottom: 1px solid var(--card-bg);
-            }
-
-            .nav-menu.active {
-                left: 0;
-            }
-
-            .nav-toggle {
-                display: flex;
-            }
-
-            .bento-grid {
-                grid-template-columns: 1fr;
-            }
-            .about-item, .skills-list-item {
-                grid-column: span 1;
-            }
-            .services-item {
-                grid-row: span 1;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CESIL ANDY BURCHETT | Full-Stack & Mobile Developer Junior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg-color:#0d0d0d;--card-bg:#191919;--text-color:#f4f4f4;--secondary-text-color:#a0a0a0;--accent-primary:#00ff88;--accent-secondary:#ff006e;--accent-mobile:#3498db;--font-family:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(70px + env(safe-area-inset-top,0px))}
+body{font-family:var(--font-family);background-color:var(--bg-color);color:var(--text-color);line-height:1.6;margin:0;overflow-x:hidden}
+/* Iconos flotantes */
+.floating-icons{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+.floating-icons span{position:absolute;font-size:3rem;opacity:.12;animation:float1 6s ease-in-out infinite alternate}
+.floating-icons span:nth-child(2n){animation-name:float2;animation-duration:8s}
+.floating-icons span:nth-child(3n){animation-name:float3;animation-duration:10s}
+.floating-icons span:nth-child(4n){animation-name:float4;animation-duration:7s}
+@keyframes float1{to{transform:translateY(-25px) rotate(5deg)}}
+@keyframes float2{to{transform:translateX(-20px) rotate(-5deg)}}
+@keyframes float3{to{transform:translate(15px,20px) rotate(3deg)}}
+@keyframes float4{to{transform:scale(1.1) rotate(8deg)}}
+/* Header */
+#header{position:fixed;top:0;width:100%;background:rgba(13,13,13,.8);-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);z-index:1000;border-bottom:1px solid var(--card-bg);padding-top:env(safe-area-inset-top,0px)}
+.nav-container{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;padding:1rem 2rem}
+.nav-logo{display:flex;align-items:center;text-decoration:none}
+.avatar{width:46px;height:46px;border-radius:50%;border:2px solid var(--accent-primary);object-fit:cover;display:flex;align-items:center;justify-content:center;color:var(--accent-primary);font-weight:700;font-size:.8rem;background:var(--card-bg)}
+.nav-menu{display:flex;list-style:none;gap:2rem;padding:0;margin:0}
+.nav-link{color:var(--text-color);text-decoration:none;font-weight:600;position:relative}
+.nav-link::after{content:'';position:absolute;width:0;height:2px;bottom:-5px;left:50%;background:var(--accent-primary);transition:all .3s}
+.nav-link:hover::after{width:100%;left:0}
+.nav-toggle{display:none;flex-direction:column;cursor:pointer;background:none;border:0;padding:6px}
+.bar{width:25px;height:3px;background:var(--text-color);margin:3px 0;transition:.3s}
+/* Hero */
+.hero{position:relative;min-height:100vh;display:flex;justify-content:center;align-items:center;text-align:center;overflow:hidden}
+.hero-bg{position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,var(--accent-secondary),var(--accent-primary),var(--accent-mobile),var(--bg-color));background-size:400% 400%;animation:gradientShift 20s ease infinite;opacity:.15;z-index:-2;transform:rotate(45deg)}
+@keyframes gradientShift{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.hero-content{max-width:800px;padding:0 2rem}
+.hero-title{font-size:clamp(2.4rem,8vw,5.5rem);font-weight:700;margin:0 0 .5rem;line-height:1.1}
+.hero-subtitle{font-size:clamp(1.1rem,4vw,1.8rem);color:var(--accent-primary);margin:0 0 1.5rem;font-weight:600}
+.hero-description{font-size:1.1rem;color:var(--secondary-text-color);margin-bottom:2.5rem}
+.btn-primary{display:inline-block;background:var(--accent-primary);color:var(--bg-color);padding:1rem 2.5rem;text-decoration:none;font-weight:700;font-size:1.1rem;border-radius:50px;transition:all .3s;box-shadow:0 4px 15px rgba(0,255,136,.3)}
+.btn-primary:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 6px 20px rgba(0,255,136,.5)}
+/* Bento */
+.bento-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));grid-auto-rows:minmax(200px,auto);gap:1.5rem;padding:5rem 2rem;max-width:1200px;margin:0 auto}
+.grid-item{background:var(--card-bg);border:1px solid #333;border-radius:20px;padding:2rem;transition:all .4s cubic-bezier(.175,.885,.32,1.275);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.grid-item:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 15px 40px rgba(0,255,136,.2);border-color:var(--accent-primary)}
+.about-item{grid-column:span 2}.services-item{grid-row:span 2}.skills-list-item{grid-column:span 2}
+.skill-main-item{background:var(--accent-primary);color:var(--bg-color)}
+.specialty-item{background:linear-gradient(135deg,var(--accent-secondary),var(--card-bg))}
+.mobile-item{background:var(--accent-mobile);border-color:var(--accent-mobile)}
+.grid-item h2,.grid-item h3{margin:0 0 .8rem;font-size:1.8rem;font-weight:700;color:var(--accent-primary)}
+.skill-main-item h3,.skill-main-item p{color:var(--bg-color)}
+.specialty-item h3,.mobile-item h3,.mobile-item p,.specialty-item p{color:var(--text-color)}
+.grid-item p{color:var(--secondary-text-color);margin:0}
+.grid-item ul{list-style:none;padding:0;margin:0}
+.grid-item li{margin-bottom:1rem;font-size:1.1rem}
+.about-stats{margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap}
+.about-stats span{background:var(--bg-color);padding:.5rem 1rem;border-radius:20px;font-size:.9rem;color:var(--accent-primary)}
+.skills-cloud{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1rem}
+.skill-tag{background:rgba(0,255,136,.1);color:var(--accent-primary);padding:.5rem 1rem;border-radius:15px;font-size:.9rem;font-weight:600;border:1px solid var(--accent-primary);transition:all .3s}
+.skill-tag:hover{transform:scale(1.1);background:var(--accent-primary);color:var(--bg-color)}
+/* Proyectos */
+.projects{padding:5rem 2rem;text-align:center}
+.projects h2,.contact h2{font-size:2.5rem;margin:0 0 3rem}
+.projects-container{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;max-width:1200px;margin:0 auto}
+.project-card{background:var(--card-bg);border:1px solid #333;border-radius:15px;overflow:hidden;width:350px;max-width:100%;transition:all .3s;display:flex;flex-direction:column;text-align:left}
+.project-card:hover{transform:translateY(-10px);box-shadow:0 10px 20px rgba(0,0,0,.2);border-color:var(--accent-primary)}
+.project-banner{height:140px;display:flex;align-items:center;justify-content:center;font-size:3.5rem}
+.project-content{padding:1.5rem;flex-grow:1;display:flex;flex-direction:column}
+.project-content h3{margin:0 0 .5rem;color:var(--accent-primary)}
+.project-content p{color:var(--secondary-text-color);flex-grow:1;margin:0}
+.project-tech{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.project-tech span{font-size:.8rem;background:#333;padding:.3rem .8rem;border-radius:10px}
+/* Contacto y footer */
+.contact{text-align:center;padding:5rem 2rem;border-top:1px solid var(--card-bg)}
+.contact h2{margin-bottom:1rem}
+.contact p{color:var(--secondary-text-color);max-width:500px;margin:0 auto 2.5rem}
+.social-links{margin-top:2rem;display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
+.social-links a{color:var(--secondary-text-color);text-decoration:none;font-weight:600;transition:color .3s,transform .3s}
+.social-links a:hover{color:var(--accent-primary);transform:translateY(-3px)}
+.footer{text-align:center;padding:2rem;border-top:1px solid var(--card-bg);color:var(--secondary-text-color);font-size:.9rem}
+/* Scroll fade */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .6s ease-out,transform .6s ease-out}
+.fade-in.is-visible{opacity:1;transform:none}
+@media (max-width:768px){
+.nav-menu{position:fixed;left:-100%;top:calc(64px + env(safe-area-inset-top,0px));flex-direction:column;background:rgba(13,13,13,.98);width:100%;text-align:center;transition:.3s;padding:2rem 0;border-bottom:1px solid var(--card-bg)}
+.nav-menu.active{left:0}
+.nav-toggle{display:flex}
+.bento-grid{grid-template-columns:1fr}
+.about-item,.skills-list-item{grid-column:span 1}
+.services-item{grid-row:span 1}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.fade-in{opacity:1;transform:none}}
+</style>
 </head>
 <body>
 
-    <!-- NUEVO: Contenedor para los iconos flotantes -->
-    <div class="floating-icons">
-        <i class="fab fa-python"></i>
-        <i class="fab fa-html5"></i>
-        <i class="fab fa-css3-alt"></i>
-        <i class="fab fa-js"></i>
-        <i class="fab fa-node-js"></i>
-        <i class="fab fa-react"></i>
-        <i class="fab fa-angular"></i>
-        <i class="fab fa-flutter"></i>
-        <i class="fab fa-laravel"></i>
+<div class="floating-icons" aria-hidden="true">
+  <span style="top:12%;left:6%">🐍</span><span style="top:20%;left:82%">🌐</span>
+  <span style="top:45%;left:12%">⚡</span><span style="top:60%;left:88%">📱</span>
+  <span style="top:78%;left:20%">💻</span><span style="top:85%;left:70%">🚀</span>
+  <span style="top:35%;left:50%">⚙️</span>
+</div>
+
+<header id="header">
+  <nav class="nav-container">
+    <a href="#" class="nav-logo" aria-label="Inicio"><span class="avatar">C.A.B.</span></a> <!-- TODO: reemplazar el span por <img class="avatar" src="TU_FOTO" alt="Andy"> -->
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="#grid" class="nav-link">Explorar</a></li>
+      <li><a href="#projects" class="nav-link">Proyectos</a></li>
+      <li><a href="#contact" class="nav-link">Contacto</a></li>
+    </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">CESIL ANDY BURCHETT</h1>
+      <p class="hero-subtitle">Full-Stack &amp; Mobile Developer Junior</p>
+      <p class="hero-description">Desarrollador junior que crea sitios web y apps móviles para restaurantes y negocios de servicios. Aprendo rápido, me comprometo con cada proyecto y entrego trabajo real.</p>
+      <a href="#projects" class="btn-primary">Ver mi trabajo</a>
+    </div>
+  </section>
+
+  <section id="grid" class="bento-grid">
+    <div class="grid-item about-item fade-in">
+      <h2>Sobre Mí</h2>
+      <p>Soy un desarrollador junior apasionado por la tecnología. Trabajo tanto el backend como la interfaz en web y móvil, y he construido proyectos reales para restaurantes y negocios de servicios. Estoy en constante aprendizaje y busco crecer con proyectos que me reten. Trabajo a distancia.</p>
+      <div class="about-stats"><span>📍 Remoto</span><span>🌱 Aprendiendo cada día</span><span>🌐 Multiplataforma</span></div>
     </div>
 
-    <header id="header">
-        <nav class="nav-container">
-            <a href="#" class="nav-logo">C.A.B.</a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#grid" class="nav-link">Explorar</a></li>
-                <li class="nav-item"><a href="#projects" class="nav-link">Proyectos</a></li>
-                <li class="nav-item"><a href="#contact" class="nav-link">Contacto</a></li>
-            </ul>
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </nav>
-    </header>
+    <div class="grid-item services-item fade-in">
+      <h3>Servicios</h3>
+      <ul>
+        <li>💻 Desarrollo Web Full-Stack</li>
+        <li>📱 Apps Nativas (Android/iOS) con Flutter</li>
+        <li>🐍 Automatización con Python</li>
+        <li>🛠️ Soporte Técnico y Mantenimiento</li>
+      </ul>
+    </div>
 
-    <main>
-        <section class="hero">
-            <div class="hero-bg"></div>
-            <div class="hero-content">
-                <h1 class="hero-title">CESIL ANDY BURCHETT</h1>
-                <p class="hero-subtitle">Full-Stack & Mobile Developer</p>
-                <p class="hero-description">Construyo experiencias web y aplicaciones móviles robustas. Tu partner tecnológico para dar vida a tus ideas en cualquier plataforma.</p>
-                <a href="#projects" class="btn-primary">Ver mi trabajo</a>
-            </div>
-        </section>
+    <div class="grid-item skill-main-item fade-in">
+      <h3>Python</h3>
+      <p>Mi lenguaje para scripts de automatización y análisis de datos, y en el que sigo profundizando.</p>
+    </div>
 
-        <section id="grid" class="bento-grid">
-            <!-- Sobre Mí -->
-            <div class="grid-item about-item fade-in">
-                <h2>Sobre Mí</h2>
-                <p>Soy un desarrollador apasionado por la tecnología, con un enfoque integral que abarca desde el backend hasta la interfaz de usuario en web y dispositivos móviles. Resuelvo problemas complejos y construyo soluciones digitales eficientes y escalables, todo a distancia.</p>
-                <div class="about-stats">
-                    <span>📍 Remoto</span>
-                    <span>🚀 Enfocado en Resultados</span>
-                    <span>🌐 Multiplataforma</span>
-                </div>
-            </div>
+    <div class="grid-item skills-list-item fade-in">
+      <h3>Stack</h3>
+      <div class="skills-cloud">
+        <span class="skill-tag">Python</span><span class="skill-tag">JavaScript</span><span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Express</span><span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span>
+        <span class="skill-tag">Flutter</span><span class="skill-tag">PWA</span><span class="skill-tag">Socket.io</span>
+        <span class="skill-tag">Google Sheets API</span>
+      </div>
+    </div>
 
-            <!-- Servicios -->
-            <div class="grid-item services-item fade-in">
-                <h3>Servicios</h3>
-                <ul>
-                    <li><i class="fas fa-code"></i> Desarrollo Web Full-Stack</li>
-                    <li><i class="fas fa-mobile-alt"></i> Apps Nativas (Android/iOS) con Flutter</li>
-                    <li><i class="fas fa-chart-line"></i> Ciencia de Datos y Análisis</li>
-                    <li><i class="fas fa-tools"></i> Soporte Técnico y Mantenimiento</li>
-                </ul>
-            </div>
+    <div class="grid-item specialty-item fade-in">
+      <h3>Especialidad</h3>
+      <p>Sitios y sistemas para restaurantes y negocios de servicios: menús, reservas, paneles de administración e integraciones.</p>
+    </div>
 
-            <!-- Habilidad Principal -->
-            <div class="grid-item skill-main-item fade-in">
-                <h3>Python</h3>
-                <p>El motor detrás de mis backend, scripts de automatización y análisis de datos. Versatilidad y potencia en un solo lenguaje.</p>
-            </div>
+    <div class="grid-item mobile-item fade-in">
+      <h3>Mobile</h3>
+      <p>Apps con Flutter y PWAs instalables, en las que sigo ganando experiencia.</p>
+    </div>
+  </section>
 
-            <!-- Habilidades (Stack) -->
-            <div class="grid-item skills-list-item fade-in">
-                <h3>Mi Stack Tecnológico</h3>
-                <div class="skills-cloud">
-                    <span class="skill-tag">JavaScript</span>
-                    <span class="skill-tag">HTML/CSS</span>
-                    <span class="skill-tag">Flutter</span>
-                    <span class="skill-tag">Dart</span>
-                    <span class="skill-tag">Pandas</span>
-                    <span class="skill-tag">NumPy</span>
-                    <span class="skill-tag">Git</span>
-                    <span class="skill-tag">Soporte Remoto</span>
-                </div>
-            </div>
-            
-            <!-- Especialidad -->
-            <div class="grid-item specialty-item fade-in">
-                <h3>Especialidad</h3>
-                <p>Ciencia de Datos</p>
-                <p>Transformo datos crudos en decisiones inteligentes y estrategias de negocio.</p>
-            </div>
+  <section id="projects" class="projects">
+    <h2>Proyectos</h2>
+    <div class="projects-container">
+            <article class="project-card fade-in">
+        <div class="project-banner" style="background:linear-gradient(135deg,#ff006e,#191919)">⚽</div>
+        <div class="project-content">
+          <h3>Golazo+ TV</h3>
+          <p>App de streaming deportivo: SPA web y backend en Node/Express.</p>
+          <div class="project-tech"><span>Node.js</span><span>Express</span><span>SPA</span></div>
+        </div>
+      </article>
+      <article class="project-card fade-in">
+        <div class="project-banner" style="background:linear-gradient(135deg,#3498db,#191919)">⛵</div>
+        <div class="project-content">
+          <h3>Makara Deluxe</h3>
+          <p>Sitio de alquiler de yates de lujo con backend en tiempo real.</p>
+          <div class="project-tech"><span>Node.js</span><span>Socket.io</span><span>JavaScript</span></div>
+        </div>
+      </article>
+      <article class="project-card fade-in">
+        <div class="project-banner" style="background:linear-gradient(135deg,#00ff88,#191919)">🦐</div>
+        <div class="project-content">
+          <h3>Saldelmar</h3>
+          <p>Web para restaurante de mariscos con panel de administración.</p>
+          <div class="project-tech"><span>HTML/CSS/JS</span><span>Admin</span></div>
+        </div>
+      </article>
+      <article class="project-card fade-in">
+        <div class="project-banner" style="background:linear-gradient(135deg,#f39c12,#191919)">🍽️</div>
+        <div class="project-content">
+          <h3>Fiesta Restaurant Gourmet</h3>
+          <p>Sitio web para negocio de comida peruana con sedes en Lima y Chiclayo.</p>
+          <div class="project-tech"><span>HTML/CSS/JS</span><span>Responsive</span></div>
+        </div>
+      </article>
+      <article class="project-card fade-in">
+        <div class="project-banner" style="background:linear-gradient(135deg,#9b59b6,#191919)">🎵</div>
+        <div class="project-content">
+          <h3>Anbur</h3>
+          <p>Reproductor de música personal instalable como PWA.</p>
+          <div class="project-tech"><span>PWA</span><span>JavaScript</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
 
-            <!-- Nuevo: Desarrollo Móvil -->
-            <div class="grid-item mobile-item fade-in">
-                <h3><i class="fas fa-mobile-alt"></i> Desarrollo Móvil</h3>
-                <p>Creo aplicaciones nativas para Android e iOS con Flutter, ofreciendo un rendimiento excepcional y una UI/UX impecable en una sola base de código.</p>
-            </div>
-        </section>
+  <section id="contact" class="contact">
+    <h2>Hablemos</h2>
+    <p>¿Tienes una idea o un negocio que necesita presencia digital? Escríbeme y conversemos.</p>
+    <a href="mailto:TU_CORREO@ejemplo.com" class="btn-primary">Enviar correo</a> <!-- TODO: tu correo real -->
+    <div class="social-links">
+      <a href="https://wa.me/51TU_NUMERO" target="_blank" rel="noopener">WhatsApp</a> <!-- TODO: tu número -->
+      <a href="https://github.com/TU_USUARIO" target="_blank" rel="noopener">GitHub</a> <!-- TODO -->
+      <a href="https://linkedin.com/in/TU_USUARIO" target="_blank" rel="noopener">LinkedIn</a> <!-- TODO -->
+    </div>
+  </section>
+</main>
 
-        <!-- SECCIÓN DE PROYECTOS -->
-        <section id="projects" class="projects fade-in">
-            <h2>Proyectos Destacados</h2>
-            <div class="projects-container">
-                <!-- Proyecto 1: Web -->
-                <div class="project-card fade-in">
-                    <img src="https://via.placeholder.com/350x200/00ff88/0d0d0d?text=Proyecto+Web" alt="Proyecto Web" class="project-image">
-                    <div class="project-content">
-                        <h3>Plataforma de Análisis de Datos</h3>
-                        <p>Un dashboard web interactivo para visualizar métricas complejas en tiempo real, construido con Python y JavaScript.</p>
-                        <div class="project-tech">
-                            <span>Python</span>
-                            <span>Django</span>
-                            <span>D3.js</span>
-                            <span>PostgreSQL</span>
-                        </div>
-                        <a href="#" class="project-link">Ver Proyecto <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
+<footer class="footer">© <span id="year"></span> Cesil Andy Burchett. Todos los derechos reservados.</footer>
 
-                <!-- Proyecto 2: Móvil -->
-                <div class="project-card fade-in">
-                    <img src="https://via.placeholder.com/350x200/3498db/ffffff?text=App+Móvil" alt="Proyecto Móvil" class="project-image">
-                    <div class="project-content">
-                        <h3>App de Fitness Móvil</h3>
-                        <p>Una aplicación nativa para iOS y Android que tracking de rutinas de ejercicio y nutrición, desarrollada 100% con Flutter.</p>
-                        <div class="project-tech">
-                            <span>Flutter</span>
-                            <span>Dart</span>
-                            <span>Firebase</span>
-                            <span>Provider</span>
-                        </div>
-                        <a href="#" class="project-link">Ver Proyecto <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Proyecto 3: Datos -->
-                <div class="project-card fade-in">
-                    <img src="https://via.placeholder.com/350x200/ff006e/0d0d0d?text=Data+Science" alt="Proyecto de Datos" class="project-image">
-                    <div class="project-content">
-                        <h3>Modelo Predictivo de Ventas</h3>
-                        <p>Un modelo de machine learning para predecir tendencias de ventas y optimizar el inventario, utilizando Python y Scikit-learn.</p>
-                        <div class="project-tech">
-                            <span>Python</span>
-                            <span>Pandas</span>
-                            <span>Scikit-learn</span>
-                            <span>Matplotlib</span>
-                        </div>
-                        <a href="#" class="project-link">Ver Proyecto <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact fade-in">
-            <h2>¿Listo para construir algo increíble?</h2>
-            <p>Si tienes una idea en mente o necesitas un experto para tu proyecto, hablemos. Envíame un correo y te responderé a la brevedad.</p>
-            <!-- ¡IMPORTANTE! Reemplaza 'tu-email@ejemplo.com' con tu correo real -->
-            <a href="mailto:cesil.burchett9320@gmail.com" class="btn-primary">Enviar Correo</a>
-            <div class="social-links">
-                <!-- ¡IMPORTANTE! Reemplaza los enlaces con tus perfiles reales -->
-                <a href="https://www.facebook.com/cesil.burchett" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                <a href="https://www.instagram.com/cesil.a_.burchett/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/+51927743956?text=Hola%20Cesil,%20vi%20tu%20portafolio%20y%20estoy%20interesado%20en%20tus%20servicios." 
-                   class="whatsapp-button" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://github.com/CESIL20" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <p>&copy; 2025 <strong>CESIL ANDY BURCHETT</strong>. Todos los derechos reservados.</p>
-    </footer>
-
-    <!-- ======================================= -->
-    <!-- =          CÓDIGO JAVASCRIPT         = -->
-    <!-- ======================================= -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // --- Menú de Navegación Móvil ---
-            const navToggle = document.getElementById('nav-toggle');
-            const navMenu = document.querySelector('.nav-menu');
-
-            if(navToggle) {
-                navToggle.addEventListener('click', () => {
-                    navMenu.classList.toggle('active');
-                });
-            }
-
-            // Cerrar menú al hacer clic en un enlace
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    navMenu.classList.remove('active');
-                });
-            });
-
-            // --- Animaciones al Hacer Scroll (Fade In) ---
-            const faders = document.querySelectorAll('.fade-in');
-
-            const appearOptions = {
-                threshold: 0.1,
-                rootMargin: "0px 0px -50px 0px"
-            };
-
-            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) {
-                        return;
-                    } else {
-                        entry.target.classList.add('is-visible');
-                        appearOnScroll.unobserve(entry.target);
-                    }
-                });
-            }, appearOptions);
-
-            faders.forEach(fader => {
-                appearOnScroll.observe(fader);
-            });
-
-            // --- Lógica para Iconos Flotantes ---
-            function initFloatingIcons() {
-                const icons = document.querySelectorAll('.floating-icons i');
-                const animations = ['float1', 'float2', 'float3', 'float4'];
-
-                icons.forEach(icon => {
-                    // Posición aleatoria
-                    const randomTop = Math.random() * 100; // 0 a 100 vh
-                    const randomLeft = Math.random() * 100; // 0 a 100 vw
-                    icon.style.top = `${randomTop}vh`;
-                    icon.style.left = `${randomLeft}vw`;
-
-                    // Animación aleatoria
-                    const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
-                    const randomDuration = (Math.random() * 10 + 15) + 's'; // 15s a 25s
-                    const randomDelay = Math.random() * 5 + 's'; // 0s a 5s
-
-                    icon.style.animationName = randomAnimation;
-                    icon.style.animationDuration = randomDuration;
-                    icon.style.animationDelay = randomDelay;
-                });
-            }
-
-            initFloatingIcons();
-
-        });
-    </script>
+<script>
+(function(){
+  var toggle=document.getElementById('nav-toggle'),menu=document.getElementById('nav-menu');
+  toggle.addEventListener('click',function(){menu.classList.toggle('active')});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('active')})});
+  document.getElementById('year').textContent=new Date().getFullYear();
+  var els=document.querySelectorAll('.fade-in');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}});
+    },{threshold:.12});
+    els.forEach(function(el){io.observe(el)});
+  }else{els.forEach(function(el){el.classList.add('is-visible')})}
+})();
+</script>
 </body>
 </html>
